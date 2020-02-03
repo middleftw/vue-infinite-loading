@@ -118,6 +118,10 @@ export default {
     },
   },
   props: {
+    state: {
+      default: 'loaded',
+      type: String,
+    },
     distance: {
       type: Number,
       default: config.props.distance,
@@ -137,6 +141,18 @@ export default {
     onInfinite: Function,
   },
   watch: {
+    'state': function(newValue) {
+      let val = newValue.indexOf('loaded') >= 0 ? 'loaded' : newValue ;
+      switch(val) {
+        case 'loaded':
+          this.loaded();
+          break;
+        // other methods
+        default:
+          throw 'State not recognized!'
+          break;
+      }
+    },
     identifier() {
       this.stateChanger.reset();
     },
